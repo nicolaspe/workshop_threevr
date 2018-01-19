@@ -13,7 +13,7 @@ container = document.querySelector('#sketch');
 let wid = window.innerWidth;
 let hei = window.innerHeight;
 
-// INITIALIZATION
+// THREE INITIALIZATION
 renderer = new THREE.WebGLRenderer({ });
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(wid, hei);
@@ -32,7 +32,6 @@ function onWindowResize(){
   let wid = window.innerWidth;
   let hei = window.innerHeight;
 
-  effect.setSize(wid, hei);
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(wid, hei);
 	camera.aspect = wid/hei;

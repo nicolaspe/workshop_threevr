@@ -7,6 +7,7 @@
 
 // global threejs variables
 let container, renderer, camera, scene;
+let controls, loader;
 
 window.addEventListener('load', onLoad);
 
@@ -15,13 +16,12 @@ function onLoad(){
 	let wid = window.innerWidth;
 	let hei = window.innerHeight;
 
-	// INITIALIZATION
+	// THREE INITIALIZATION
 	renderer = new THREE.WebGLRenderer({ });
 	renderer.setPixelRatio(window.devicePixelRatio);
 	renderer.setSize(wid, hei);
 	container.appendChild(renderer.domElement);
 	scene = new THREE.Scene();
-
 	camera = new THREE.PerspectiveCamera(80, wid/hei, 0.1, 1000);
 	camera.position.set(0, 0, 0);
 
@@ -30,16 +30,16 @@ function onLoad(){
 
 	loader = new THREE.TextureLoader();
 
-	// EVENTS
 	window.addEventListener('resize', onWindowResize, true );
+
+	animate();
 }
 
-
+// EVENTS
 function onWindowResize(){
   let wid = window.innerWidth;
   let hei = window.innerHeight;
 
-  effect.setSize(wid, hei);
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(wid, hei);
 	camera.aspect = wid/hei;
@@ -49,7 +49,6 @@ function onWindowResize(){
 
 // ANIMATION
 function animate() {
-	requestAnimationFrame(animate);
 	renderer.render(scene, camera);
+	requestAnimationFrame(animate);
 }
-animate();
