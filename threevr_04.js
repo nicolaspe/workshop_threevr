@@ -66,6 +66,7 @@ function onWindowResize(){
   let wid = window.innerWidth;
   let hei = window.innerHeight;
 
+	effect.setSize(wid, hei);
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(wid, hei);
 	camera.aspect = wid/hei;
