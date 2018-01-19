@@ -7,7 +7,7 @@
 
 // global threejs variables
 let container, renderer, camera, scene;
-let controls, loader;
+let controls, loader, effect;
 
 window.addEventListener('load', onLoad);
 
@@ -27,7 +27,7 @@ function onLoad(){
 	camera.position.set(0, 0, 0);
 
 	effect = new THREE.VREffect(renderer);
-  effect.setSize(window.innerWidth, window.innerHeight);
+  effect.setSize(wid, hei);
 
 	controls = new THREE.VRControls( camera );
   controls.standing = true;
@@ -50,6 +50,7 @@ function setupVRStage(){
   // get available displays
   navigator.getVRDisplays().then( function(displays){
     if(displays.length > 0) {
+			// console.log(displays);
       vrDisplay = displays[0];
       // setup button
       vrButton = WEBVR.getButton( vrDisplay, renderer.domElement );

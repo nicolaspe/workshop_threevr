@@ -71,7 +71,7 @@ function createEnvironment(){
 		wireframe: true,
 	});
 	var skydome = new THREE.Mesh(sky_geo, sky_mat);
-	scene.add(skydome)
+	scene.add(skydome);
 
 	// SPHERES
 	let sp_geo  = new THREE.SphereGeometry(20, 12, 12);

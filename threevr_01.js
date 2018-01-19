@@ -24,7 +24,6 @@ scene = new THREE.Scene();
 camera = new THREE.PerspectiveCamera(80, wid/hei, 0.1, 1000);
 camera.position.set(0, 0, 0);
 
-
 // EVENTS
 window.addEventListener('resize', onWindowResize, true );
 
