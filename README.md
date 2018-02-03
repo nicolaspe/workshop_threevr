@@ -116,24 +116,55 @@ In addition to these libraries, as we're developing in a computer, we'll need th
 <br/>
 Now, the code.
 
-1. We need to create the new renderer for the VR
+1. We need to create the new renderer for the VR. This will handle the split screen as well as making the projection matrices to account for the perspective of each eye.
   ```
   effect = new THREE.VREffect(renderer);
   effect.setSize(wid, hei);
   ```
-2. Enable the VR mode
+2. Enable the VR mode in threejs.
   ```
   renderer.vr.enabled = true;
   ```
-3. Use VRControls
+3. Use VRControls to control the camera.
   ```
   controls = new THREE.VRControls( camera );
   controls.standing = true;
   camera.position.y = controls.userHeight;
 	controls.update();
   ```
-4. Get and setup the VR display
+4. Get and setup the VR display. This is one of the key parts of the process. `navigator` is a built-in browser variable, which we ask for a `VRDisplay`, a new built-in class in the Web API. When the [promise](https://developers.google.com/web/fundamentals/primers/promises) is fulfilled, we are returned an array of VRDisplays. Most of the time, we only have one VR display (mobile device or the Chrome extension), but in case you want to add an external device, you can log the displays and their parameters to modify the code accordingly and choose the desired one. Then, we create the "Enter VR mode" button, with the `getButton()` function from the WebVR library.
+  ```
+  function setupVRStage(){
+    // get available displays
+    navigator.getVRDisplays().then( function(displays){
+      if(displays.length > 0) {
+  			// console.log(displays);
+        vrDisplay = displays[0];
+        // setup button
+        vrButton = WEBVR.getButton( vrDisplay, renderer.domElement );
+        document.getElementById('vr_button').appendChild( vrButton );
+      } else {
+        console.log("NO VR DISPLAYS PRESENT");
+      }
+      update();
+    });
+  }
+  ```
+5. Change the rendering pipeline. As stated before, the VR display is what has to ask for new frames to be rendered. VR applications are recommended to run at 90 fps, much faster than the 60 fps of the video game ideal. To be able to know on which mode should we render, we use the boolean parameter `vrDisplay.isPresenting`. If it's true, then we use the VREffect to render, and the VR display is the one that requests the next frame. Otherwise, we use the same code as before.
+  ```
+  function animate(timestamp) {
+    if(vrDisplay.isPresenting){ // VR rendering
+      controls.update();
+      effect.render(scene, camera);
+      vrDisplay.requestAnimationFrame(animate);
+    } else {  // browser rendering
+  		controls.update();
+      renderer.render(scene, camera);
+      window.requestAnimationFrame(animate);
+    }
+  }
+  ```
 
+And that's it! Your project can now run in VR mode 😃 A few other details were added to the code, you can inspect and play with it as you wish.
 
-## Links
-- [Chrome WebVR API Emulation](https://chrome.google.com/webstore/detail/webvr-api-emulation/gbdnpaebafagioggnhkacnaaahpiefil)
+PD: If there's any comment, issue or question, post an issue or send me a message/email.
