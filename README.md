@@ -75,7 +75,7 @@ Also, some new elements are:
 - `loader`: a [texture loader](https://threejs.org/docs/#api/loaders/TextureLoader). It needs to be created only once to be used whenever
 
 
-<br/>
+
 ### 03 - Creating elements
 To create an element ([Mesh](https://threejs.org/docs/#api/objects/Mesh)) in three.js you need two essential parts: a [geometry](https://threejs.org/docs/#api/core/Geometry) and a mesh [material](https://threejs.org/docs/#api/constants/Materials).
 
