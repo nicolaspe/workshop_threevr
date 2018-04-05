@@ -1,10 +1,23 @@
-# unconference_threevr
+# threeVR workshop
 
-**VR in the browser!!!** Material for the threeVR class @ ITP Unconference, Winter 2018
+**VR in the browser!!!**
+
+Presented at:
+- threeVR class @ ITP Unconference, Winter 2018
+- (update) three.js workshop @ ITP Open Source Cinema, Spring 2018
 
 
+## Outline
+0. Introduction to three.js & WebVR: How three.js "works"
+1. Basic three.js building block
+2. Object creation and textures
+3. Animation
+4. Playing with the camera
+5. Mouse tracking (raycasting)
+6. WebVR !!!
 
-## Introduction
+
+## Chapter 00 : Introduction
 
 ### three.js
 - Faster (& prettier) than p5.js in 3D *
@@ -12,6 +25,7 @@
 - As [complex as you want](https://threejs.org/) (seriously, see the featured projects they have on their website!)
 
 (* There's a big difference on how three.js and p5.js render their graphics. In p5.js, you need to manually discriminate what's on the screen. Everything you draw, is going to be displayed. If it's outside the limits of the canvas, the computer will try to draw it anyway. On the other hand, in three.js you add objects to a scene and the renderer calculates what the selected camera sees and acts accordingly. I imagine it as putting toys in a box and moving a camera around. The toys are always there, but you only see what you're pointing at.)
+
 
 ### [WebVR](https://webvr.info/)
 - Experience VR in your browser
@@ -25,21 +39,39 @@
 
 
 
-## Let's code
-Each subsection in this part will correlate to a .js file, explaining their content.
+## Chapter 01: Basic three.js building block
+There are some elements that we always need for three.js to run:
 
-### 01 - Basic building block elements for three js
-three.js always needs some basic elements to run:
-- [`scene`](https://threejs.org/docs/#api/scenes/Scene): where you place all your objects, lights, cameras and such
-- [`camera`](https://threejs.org/docs/#api/cameras/Camera): how we look at the scenes. We can choose between perspective (most common one), orthographic and more
-- [`renderer`](https://threejs.org/docs/#api/renderers/WebGLRenderer): the WebGL renderer in charge of displaying the scenes. Has different parameter options, such as size, pixel ratio, etc
-- `animate()`: function which creates the render loop and where you should place all the code that [updates your objects](https://threejs.org/docs/#manual/introduction/How-to-update-things) to animate them
+#### [`scene`](https://threejs.org/docs/#api/scenes/Scene)
+It is where you place all your objects, lights, cameras and such. Think of it as a toy box or a dollhouse: a space ready for you to place anything you want.
+
+(TIP: You can have as many scenes as you want, and switch between them later in the code.)
+
+#### [`camera`](https://threejs.org/docs/#api/cameras/Camera)
+This is how we look at the scenes. We can choose between perspective (most common one, and the one you'll use the most), orthographic and more.
+
+Let's break down the parameters needed to initialize the camera:
+```
+camera = new THREE.PerspectiveCamera(45, wid/hei, 0.1, 1000);
+```
+1. **Field of View:** The angle of the camera "lens". It is how much the camera "sees" and what it displays on the scene. The value is in degrees.
+2. **Aspect Ratio:** It is almost always the ratio between the width and height of the three.js canvas. Otherwise, the picture looks distorted.
+3. **Near:** How near can an object be before being clipped by the camera. Objects closer than this won't be displayed.
+4. **Far:** How far can an object be before being clipped by the camera. Objects further than this won't be displayed.
+
+
+#### [`renderer`](https://threejs.org/docs/#api/renderers/WebGLRenderer)
+This is the WebGL renderer in charge of displaying the scenes. Has different parameter options, such as size, pixel ratio, etc. We won't go into much detail here, but has great options to get better image quality or to downgrade it if you need it to be less intense.
+
+
+#### `animate()`
+function which creates the render loop and where you should place all the code that [updates your objects](https://threejs.org/docs/#manual/introduction/How-to-update-things) to animate them
 
   This last function is worth looking at. The `renderer.render(scene, camera)` is the part that displays the scene according to the camera's parameters, and `requestAnimationFrame(animate)` is how the browser asks for the new frame when it's ready for a new one. This function has to be called the first time to enter the loop. (This last function is part of the WebAPI code.)
   ```
   function animate() {
-	   renderer.render(scene, camera);
-     requestAnimationFrame(animate);
+    renderer.render(scene, camera);
+    requestAnimationFrame(animate);
   }
   animate();
   ```

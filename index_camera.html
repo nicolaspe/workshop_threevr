@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>ThreeVR</title>
+
+		<script src="lib/three.js"></script>
+		<script src="lib/OrbitControls.js"></script>
+		<script src="lib/VRControls.js"></script>
+		<script src="lib/VREffect.js"></script>
+		<script src="lib/WebVR.js"></script>
+		<script src="lib/webvr-polyfill.js"></script>
+
+		<style>
+			html, body {
+				margin: 0;
+				padding: 0;
+			}
+			#controls {
+				position: absolute;
+				top: 20px;
+				left: 20px;
+				padding: 5px;
+				width: 300px;
+				background: rgba(255, 255, 255, 0.6);
+				border-radius: 5px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="container">
+			<div id="controls">
+				Camera parameters:
+				<ul>
+					<li>Position: ( <span id="label_px"> </span> , <span id="label_py"> </span> , <span id="label_pz"> </span> ) </li>
+					<li>Rotation: ( <span id="label_rx"> </span> , <span id="label_ry"> </span> , <span id="label_rz"> </span> ) </li>
+					<li>FOV: <span id="label_fov"> </span> <input type="range" id="fov_sl" value="45" min="0" max+"90"> </li>
+				</ul>
+				<p>
+				</p>
+			</div>
+
+			<div id="sketch"></div>
+		</div>
+
+
+		<script src="threevr_04.js"></script>
+
+	</body>
+</html>

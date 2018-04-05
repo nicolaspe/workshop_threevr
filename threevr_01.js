@@ -1,45 +1,39 @@
 /* THREE VR - 01
-*	Basic building block elements for three js
+*	Basic building block for three js
 *
-*	ITP Unconference, Winter 2018
-*	Nicolás Peña-Escarpentier
+* three.js Workshop
+*	Open Source Cinema - ITP
+*	nicolás escarpentier
 */
 
 // global threejs variables
 let container, renderer, camera, scene;
 
-container = document.querySelector('#sketch');
+window.addEventListener('load', init);
 
-let wid = window.innerWidth;
-let hei = window.innerHeight;
+function init(){
+	container = document.querySelector('#sketch');
+	let wid = window.innerWidth;
+	let hei = window.innerHeight;
 
-// THREE INITIALIZATION
-renderer = new THREE.WebGLRenderer({ });
-renderer.setPixelRatio(window.devicePixelRatio);
-renderer.setSize(wid, hei);
-container.appendChild(renderer.domElement);
+	// THREE INITIALIZATION
+	renderer = new THREE.WebGLRenderer({ });
+	renderer.setPixelRatio(window.devicePixelRatio);
+	renderer.setSize(wid, hei);
+	container.appendChild(renderer.domElement);
 
-scene = new THREE.Scene();
+	scene = new THREE.Scene();
 
-camera = new THREE.PerspectiveCamera(80, wid/hei, 0.1, 1000);
-camera.position.set(0, 0, 0);
+	camera = new THREE.PerspectiveCamera(60, wid/hei, 0.1, 5000);
+	camera.position.set(-10, 0, 0);
 
-// EVENTS
-window.addEventListener('resize', onWindowResize, true );
-
-function onWindowResize(){
-  let wid = window.innerWidth;
-  let hei = window.innerHeight;
-
-  renderer.setPixelRatio(window.devicePixelRatio);
-  renderer.setSize(wid, hei);
-	camera.aspect = wid/hei;
-  camera.updateProjectionMatrix();
+	animate();
 }
+
 
 // ANIMATION
 function animate() {
-	requestAnimationFrame(animate);
+	controls.update();
 	renderer.render(scene, camera);
+	requestAnimationFrame(animate);
 }
-animate();
