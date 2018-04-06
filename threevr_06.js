@@ -2,8 +2,8 @@
 *	Raycasting
 *
 * three.js Workshop
-*	Open Source Cinema - ITP
-*	nicolás escarpentier
+* Open Source Cinema - ITP
+* nicolás escarpentier
 */
 
 // global threejs variables
