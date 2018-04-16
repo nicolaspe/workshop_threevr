@@ -27,19 +27,19 @@ function onLoad(){
 	camera.position.set(0, 0, 0);
 
 	effect = new THREE.VREffect(renderer);
-  effect.setSize(wid, hei);
+	effect.setSize(wid, hei);
 
 	controls = new THREE.VRControls( camera );
-  controls.standing = true;
-  camera.position.y = controls.userHeight;
+	controls.standing = true;
+	camera.position.y = controls.userHeight;
 	controls.update();
 
 	loader = new THREE.TextureLoader();
 	createEnvironment();
 
 	// Initialize (Web)VR
-  renderer.vr.enabled = true;
-  setupVRStage();
+	renderer.vr.enabled = true;
+	setupVRStage();
 
 	window.addEventListener('resize', onWindowResize, true );
 	window.addEventListener('vrdisplaypresentchange', onWindowResize, true);
@@ -47,19 +47,19 @@ function onLoad(){
 
 // sets up the VR stage + button
 function setupVRStage(){
-  // get available displays
-  navigator.getVRDisplays().then( function(displays){
-    if(displays.length > 0) {
+	// get available displays
+	navigator.getVRDisplays().then( function(displays){
+		if(displays.length > 0) {
 			// console.log(displays);
-      vrDisplay = displays[0];
-      // setup button
-      vrButton = WEBVR.getButton( vrDisplay, renderer.domElement );
-      document.getElementById('vr_button').appendChild( vrButton );
-    } else {
-      console.log("NO VR DISPLAYS PRESENT");
-    }
-    update();
-  });
+			vrDisplay = displays[0];
+			// setup button
+			vrButton = WEBVR.getButton( vrDisplay, renderer.domElement );
+			document.getElementById('vr_button').appendChild( vrButton );
+		} else {
+			console.log("NO VR DISPLAYS PRESENT");
+		}
+		update();
+	});
 }
 
 
@@ -68,10 +68,10 @@ function onWindowResize(){
   let wid = window.innerWidth;
   let hei = window.innerHeight;
 
-	effect.setSize(wid, hei);
+  effect.setSize(wid, hei);
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(wid, hei);
-	camera.aspect = wid/hei;
+  camera.aspect = wid/hei;
   camera.updateProjectionMatrix();
 }
 
