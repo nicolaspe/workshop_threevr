@@ -1,5 +1,5 @@
-/* THREE VR - 05
-*	Raycasting
+/* THREE VR - 06
+*	WebVR
 *
 * three.js Workshop
 * Open Source Cinema - ITP

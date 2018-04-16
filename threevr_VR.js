@@ -1,5 +1,4 @@
-/* THREE VR - 06
-*	Let's go VIRTUAL
+/* THREE VR - Simple VR scene
 *
 * three.js Workshop
 *	Open Source Cinema - ITP
@@ -63,6 +62,7 @@ function setupVRStage(){
   });
 }
 
+
 // EVENTS
 function onWindowResize(){
   let wid = window.innerWidth;
@@ -104,32 +104,4 @@ function createEnvironment(){
 	});
 	var skydome = new THREE.Mesh(sky_geo, sky_mat);
 	scene.add(skydome)
-
-	// SPHERES
-	let sp_geo  = new THREE.SphereGeometry(20, 12, 12);
-	let sp_mat1 = new THREE.MeshBasicMaterial({
-		color: 0x0000ff,
-		side: THREE.DoubleSide,
-	});
-	let sp_mat2 = new THREE.MeshLambertMaterial({
-		color: 0x00ff00,
-		side: THREE.DoubleSide,
-	})
-
-	var sphere1 = new THREE.Mesh(sp_geo, sp_mat1);
-	sphere1.position.set(-200, 0, 0);
-	scene.add(sphere1);
-
-	var sphere2 = new THREE.Mesh(sp_geo, sp_mat2);
-	sphere2.position.set(0, 0, -200);
-	scene.add(sphere2);
-
-
-	// LIGHTS!
-	let d_light = new THREE.DirectionalLight(0xffffff, 1);
-	scene.add(d_light);
-
-	let p_light = new THREE.PointLight(0xff0000, 1.5, 1000, 2);
-	p_light.position.set(0, -100, -100);
-	scene.add(p_light);
 }
