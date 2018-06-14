@@ -9,9 +9,9 @@
 let container, renderer, camera, scene;
 let controls, loader, effect;
 
-window.addEventListener('load', onLoad);
+window.addEventListener('load', init);
 
-function onLoad(){
+function init(){
 	container = document.querySelector('#sketch');
 	let wid = window.innerWidth;
 	let hei = window.innerHeight;

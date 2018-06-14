@@ -85,7 +85,7 @@ function createEnvironment(){
 		wireframe: true
 	});
 	let ref_plane = new THREE.Mesh(plane_geo, plane_mat);
-	ref_plane.rotation.z = 90;
+	ref_plane.rotation.x = Math.PI/2;
 	ref_plane.position.set(0, -200, 0);
 	scene.add(ref_plane);
 
