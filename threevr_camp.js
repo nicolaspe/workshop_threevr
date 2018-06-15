@@ -38,7 +38,6 @@ function init(){
   effect.setSize(wid, hei);
 
   renderer.vr.enabled = true;
-  setupVRStage();
 
   scene = new THREE.Scene();
 
@@ -64,6 +63,7 @@ function init(){
 
   scene_objects = [];
   createEnvironment();
+  setupVRStage();
 
   animate();
 }
