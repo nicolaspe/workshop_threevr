@@ -75,7 +75,7 @@ function setupVRStage(){
       // console.log(displays);
       vrDisplay = displays[0];
       // setup vrButton
-      vrButton = WEBVR.getButton( vrDisplay, renderer.domElement );
+      vrButton = WEBVR.createButton( renderer );
       document.getElementById('vr_button').appendChild( vrButton );
     } else {
       console.log("NO VR DISPLAYS AVAILABLE!");
