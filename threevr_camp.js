@@ -25,7 +25,7 @@ window.addEventListener('load', init);
 
 // SETUP
 function init(){
-  console.log("NO EFFECT TEST v2.1");
+  console.log("NO EFFECT TEST v2.2");
 
   container = document.querySelector('#sketch');
   let wid = window.innerWidth;
@@ -125,7 +125,7 @@ function onWindowResize(){
   let hei = window.innerHeight;
 
   renderer.setPixelRatio(window.devicePixelRatio);
-  effect.setSize(wid, hei);
+  // effect.setSize(wid, hei);
   renderer.setSize(wid, hei);
   camera.aspect = wid/hei;
   camera.updateProjectionMatrix();
