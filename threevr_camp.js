@@ -100,15 +100,16 @@ function animate() {
 
   moveSpheres();
 
-  if(vrDisplay.isPresenting){
-    controls.update();
-    effect.render(scene, camera);
-    vrDisplay.requestAnimationFrame(animate);
-  } else{
+  // if(vrDisplay.isPresenting){
     controls.update();
     renderer.render(scene, camera);
-    window.requestAnimationFrame(animate);
-  }
+    vrDisplay.requestAnimationFrame(animate);
+  // }
+  // else{
+  //   controls.update();
+  //   renderer.render(scene, camera);
+  //   window.requestAnimationFrame(animate);
+  // }
 
 }
 
