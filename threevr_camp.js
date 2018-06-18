@@ -25,6 +25,8 @@ window.addEventListener('load', init);
 
 // SETUP
 function init(){
+  console.log("NO EFFECT TEST");
+  
   container = document.querySelector('#sketch');
   let wid = window.innerWidth;
   let hei = window.innerHeight;
