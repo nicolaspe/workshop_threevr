@@ -25,8 +25,8 @@ window.addEventListener('load', init);
 
 // SETUP
 function init(){
-  console.log("NO EFFECT TEST");
-  
+  console.log("NO EFFECT TEST v2.0");
+
   container = document.querySelector('#sketch');
   let wid = window.innerWidth;
   let hei = window.innerHeight;
@@ -66,8 +66,6 @@ function init(){
   scene_objects = [];
   createEnvironment();
   setupVRStage();
-
-  animate();
 }
 
 function setupVRStage(){
@@ -82,18 +80,18 @@ function setupVRStage(){
     } else {
       console.log("NO VR DISPLAYS AVAILABLE!");
     }
-    update();
+    animate();
   } );
 }
 
 
 // DRAW
-function update(){
-  renderer.render(scene, camera);
-  window.requestAnimationFrame(animate);
-
-  animate();
-}
+// function update(){
+//   renderer.render(scene, camera);
+//   window.requestAnimationFrame(animate);
+//
+//   animate();
+// }
 
 function animate() {
   raycasting();
@@ -102,17 +100,9 @@ function animate() {
 
   moveSpheres();
 
-  // if(vrDisplay.isPresenting){
-    controls.update();
-    renderer.render(scene, camera);
-    vrDisplay.requestAnimationFrame(animate);
-  // }
-  // else{
-  //   controls.update();
-  //   renderer.render(scene, camera);
-  //   window.requestAnimationFrame(animate);
-  // }
-
+  controls.update();
+  renderer.render(scene, camera);
+  vrDisplay.requestAnimationFrame(animate);
 }
 
 function moveSpheres(){
