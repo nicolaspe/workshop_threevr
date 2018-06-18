@@ -25,6 +25,8 @@ window.addEventListener('load', init);
 
 // SETUP
 function init(){
+  console.log("NO EFFECT TEST");
+  
   container = document.querySelector('#sketch');
   let wid = window.innerWidth;
   let hei = window.innerHeight;
@@ -34,9 +36,8 @@ function init(){
   renderer.setSize(wid, hei);
   container.appendChild(renderer.domElement);
 
-  // no longer necessary!
-  // effect = new THREE.VREffect(renderer);
-  // effect.setSize(wid, hei);
+  effect = new THREE.VREffect(renderer);
+  effect.setSize(wid, hei);
 
   renderer.vr.enabled = true;
 
@@ -65,6 +66,8 @@ function init(){
   scene_objects = [];
   createEnvironment();
   setupVRStage();
+
+  animate();
 }
 
 function setupVRStage(){
@@ -79,12 +82,19 @@ function setupVRStage(){
     } else {
       console.log("NO VR DISPLAYS AVAILABLE!");
     }
-    animate();
+    update();
   } );
 }
 
 
 // DRAW
+function update(){
+  renderer.render(scene, camera);
+  window.requestAnimationFrame(animate);
+
+  animate();
+}
+
 function animate() {
   raycasting();
 
@@ -92,9 +102,16 @@ function animate() {
 
   moveSpheres();
 
-  controls.update();
-  renderer.render(scene, camera);
-  vrDisplay.requestAnimationFrame(animate);
+  // if(vrDisplay.isPresenting){
+    controls.update();
+    renderer.render(scene, camera);
+    vrDisplay.requestAnimationFrame(animate);
+  // }
+  // else{
+  //   controls.update();
+  //   renderer.render(scene, camera);
+  //   window.requestAnimationFrame(animate);
+  // }
 
 }
 
