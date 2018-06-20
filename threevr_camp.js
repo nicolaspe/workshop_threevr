@@ -25,7 +25,7 @@ window.addEventListener('load', init);
 
 // SETUP
 function init(){
-  console.log("NO EFFECT, NEW THREE TEST v1.0.1");
+  console.log("NO EFFECT, NEW THREE TEST v1.0.2");
 
   container = document.querySelector('#sketch');
   let wid = window.innerWidth;
@@ -43,7 +43,7 @@ function init(){
   scene = new THREE.Scene();
 
   camera = new THREE.PerspectiveCamera(60, wid/hei, 0.1, 5000);
-  camera.position.set(-10, 0, 0);
+  camera.position.set( 0, 10, 0) ;
 
   // controls = new THREE.OrbitControls(camera, renderer.domElement);
   // controls.update();
@@ -69,6 +69,7 @@ function init(){
 function setupVRStage(){
 
   vrButton = WEBVR.createButton( renderer );
+  document.getElementById('vr_button').appendChild( vrButton );
   animate();
 
   // get available VR displays
@@ -128,9 +129,9 @@ function onWindowResize(){
   let wid = window.innerWidth;
   let hei = window.innerHeight;
 
-  renderer.setPixelRatio(window.devicePixelRatio);
-  effect.setSize(wid, hei);
   renderer.setSize(wid, hei);
+  renderer.setPixelRatio(window.devicePixelRatio);
+  // effect.setSize(wid, hei);
   camera.aspect = wid/hei;
   camera.updateProjectionMatrix();
 }
