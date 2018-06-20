@@ -25,7 +25,7 @@ window.addEventListener('load', init);
 
 // SETUP
 function init(){
-  console.log("NO EFFECT TEST v2.3");
+  console.log("NO EFFECT, NEW THREE TEST v1.0");
 
   container = document.querySelector('#sketch');
   let wid = window.innerWidth;
@@ -36,9 +36,8 @@ function init(){
   renderer.setSize(wid, hei);
   container.appendChild(renderer.domElement);
 
-  effect = new THREE.VREffect(renderer);
-  effect.setSize(wid, hei);
-
+  // effect = new THREE.VREffect(renderer);
+  // effect.setSize(wid, hei);
   renderer.vr.enabled = true;
 
   scene = new THREE.Scene();
@@ -52,7 +51,6 @@ function init(){
   controls.standing = true;
   camera.position.y = controls.userHeight;
   controls.update();
-
 
   loader = new THREE.TextureLoader();
 
@@ -69,24 +67,31 @@ function init(){
 }
 
 function setupVRStage(){
+
+  vrButton = WEBVR.createButton( renderer );
+  animate();
+
   // get available VR displays
-  navigator.getVRDisplays().then( function(displays){
-    if(displays.length > 0){
-      // console.log(displays);
-      vrDisplay = displays[0];
-      // setup vrButton
-      vrButton = WEBVR.createButton( renderer );
-      document.getElementById('vr_button').appendChild( vrButton );
-    } else {
-      console.log("NO VR DISPLAYS AVAILABLE!");
-    }
-    animate();
-  } );
+  // navigator.getVRDisplays().then( function(displays){
+  //   if(displays.length > 0){
+  //     // console.log(displays);
+  //     vrDisplay = displays[0];
+  //     // setup vrButton
+  //     vrButton = WEBVR.createButton( renderer );
+  //     document.getElementById('vr_button').appendChild( vrButton );
+  //   } else {
+  //     console.log("NO VR DISPLAYS AVAILABLE!");
+  //   }
+  //   animate();
+  // } );
 }
 
 
 // DRAW
 function animate() {
+  renderer.setAnimationLoop( render );
+}
+function render(){
   raycasting();
 
   timekeep += 0.01;
@@ -94,8 +99,7 @@ function animate() {
   moveSpheres();
 
   controls.update();
-  renderer.render(scene, camera);
-  vrDisplay.requestAnimationFrame(animate);
+  renderer.render( scene, camera );
 }
 
 function moveSpheres(){

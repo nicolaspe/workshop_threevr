@@ -3,8 +3,9 @@
 **VR in the browser!!!**
 
 Presented at:
-- threeVR class @ ITP Unconference, Winter 2018
-- (update) three.js workshop @ ITP Open Source Cinema, Spring 2018
+- ITP Unconference, Winter 2018
+- ITP Open Source Cinema, Spring 2018
+- ITP Camp, Summer 2018
 
 
 ## Outline
@@ -14,7 +15,7 @@ Presented at:
 3. Animation
 4. Playing with the camera
 5. Mouse tracking (raycasting)
-6. WebVR !!!
+6. WebVR!!!
 
 
 ## Chapter 00 : Introduction
@@ -33,9 +34,16 @@ Presented at:
   - Also needs some extra js libraries
   - Can be extended to any mobile browser with the [WebVR polyfill](https://github.com/immersive-web/webvr-polyfill)
 - Change in the rendering pipeline *
-- Work in progress… Code from 2016 and earlier might not work
+- Work in progress… Code from 2017 and earlier might not work
 
-(* Usually, the browser is what decides when to render a new frame. In VR, the display is what has to decide when to render the new frame, which changes the way we call for this function in either mode.)
+(* Usually, the browser is the one that decides when to render a new frame. In VR, the display is the one that has to decide when to render the new frame, which changes the way we call for this function in either mode.)
+
+This technology is in constant development,
+
+ [Origin Trial](https://bit.ly/OriginTrials)
+
+
+[Request a Token for your site](http://bit.ly/OriginTrialSignup)
 
 
 
@@ -51,7 +59,7 @@ It is where you place all your objects, lights, cameras and such. Think of it as
 This is how we look at the scenes. We can choose between perspective (most common one, and the one you'll use the most), orthographic and more.
 
 Let's break down the parameters needed to initialize the camera:
-```
+```JavaScript
 camera = new THREE.PerspectiveCamera(45, wid/hei, 0.1, 1000);
 ```
 1. **Field of View:** The angle of the camera "lens". It is how much the camera "sees" and what it displays on the scene. The value is in degrees.
@@ -68,7 +76,7 @@ This is the WebGL renderer in charge of displaying the scenes. Has different par
 function which creates the render loop and where you should place all the code that [updates your objects](https://threejs.org/docs/#manual/introduction/How-to-update-things) to animate them
 
   This last function is worth looking at. The `renderer.render(scene, camera)` is the part that displays the scene according to the camera's parameters, and `requestAnimationFrame(animate)` is how the browser asks for the new frame when it's ready for a new one. This function has to be called the first time to enter the loop. (This last function is part of the WebAPI code.)
-  ```
+  ```JavaScript
   function animate() {
     renderer.render(scene, camera);
     requestAnimationFrame(animate);
@@ -76,13 +84,13 @@ function which creates the render loop and where you should place all the code t
   animate();
   ```
 
-<br/>
+<br>
 There are also some not-so-essential (global JavaScript code) ones that I always include:
 
-- `container`: a call to the HTML element that will contain the canvas by using `container.appendChild(renderer.domElement);`
-- `resize` event listener: in case you have a fullscreen sized sketch, you need to update the display area and adjust the camera accordingly
+- `container`: a call to the HTML element that will contain the canvas by using `container.appendChild(renderer.domElement);`. On certain occasions it is useful to have the HTML element in a variable
+- `resize` event listener: in case you have a full sized sketch, you need to update the display area and adjust the camera accordingly
 
-  ```
+  ```JavaScript
   window.addEventListener('resize', onWindowResize, true );
 
   function onWindowResize(){
@@ -91,24 +99,23 @@ There are also some not-so-essential (global JavaScript code) ones that I always
 
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(wid, hei);
-	  camera.aspect = wid/hei;
+    camera.aspect = wid/hei;
     camera.updateProjectionMatrix();
    }
    ```
+- `init` function: in the same way p5 has the `setup` function, I create a single function to run all the initialization code for three.js. Note that it is not necessary (like the setup function in p5), but it makes everything much more organized. To make this function run after the entire webpage has loaded, add `window.addEventListener('load', init);`
+
+<br>
 
 
-### 02 - Other basic elements and organizing the code
-It is a bit confusing learning how to create three.js sketches, as some example files are not very organized. With that in mind, in order to understand them better and following some examples online, I encapsulate all the essential code in one function, `onLoad()`. This code is executed whenever the browser finishes loading the window, thanks to the `load` event listener. At the end of this function, I call the `createEnvironment()` function to create all the elements (which will be covered in the next subsection) and the `animate()` function to start running the sketch.
+### Chapter 02 - Object creation and textures
 
-*(See the corresponding file to see exactly what this function has. Displaying it here would be copying almost the entire file).*
-
-Also, some new elements are:
 - `controls`: this is used to control the camera. Some usual controls are the [OrbitControls](https://threejs.org/docs/#examples/controls/OrbitControls), [FlyControls](https://threejs.org/examples/misc_controls_fly.html) and [VRControls](https://github.com/mrdoob/three.js/blob/master/examples/js/controls/VRControls.js). They need to be constantly updated on the `animation()` function
 - `loader`: a [texture loader](https://threejs.org/docs/#api/loaders/TextureLoader). It needs to be created only once to be used whenever
 
 
 
-### 03 - Creating elements
+### Chapter 03 - Animation
 To create an element ([Mesh](https://threejs.org/docs/#api/objects/Mesh)) in three.js you need two essential parts: a [geometry](https://threejs.org/docs/#api/core/Geometry) and a mesh [material](https://threejs.org/docs/#api/constants/Materials).
 
 - A **geometry** is a set of *vertices* (points in space) and *faces* (sets of 3 vertices that form a plane). Luckily, three.js has A LOT of built in shapes for our convenience (i.e: [sphere](https://threejs.org/docs/api/geometries/SphereGeometry.html), [box](https://threejs.org/docs/api/geometries/BoxGeometry.html), [torus](https://threejs.org/docs/#api/geometries/TorusGeometry), etc).
@@ -116,7 +123,7 @@ To create an element ([Mesh](https://threejs.org/docs/#api/objects/Mesh)) in thr
 - A mesh **material** is a set of properties that give a basic texture to the material. Depending on the properties we want, we could use a [Basic material](https://threejs.org/docs/api/materials/MeshBasicMaterial.html) (which is flat and unaffected by lights), a [Lambert material](https://threejs.org/docs/api/materials/MeshLambertMaterial.html) (which is reflectant, but not shiny), a [Phong material](https://threejs.org/docs/api/materials/MeshPhongMaterial.html) (very shiny!), or others. We can also specify other properties, as a mapped texture, specular or emissive properties, the side of the material (it can be displayed inside for a sky dome -an enormous sphere that acts as the sky- , or only on the outside for a normal object), to display only the wireframe, etc.
 
 After defining this elements, to create the object you simply assign them to a Mesh, set its position and rotation, and add them to the scene:
-  ```
+  ```JavaScript
   var obj = new Mesh(obj_geometry, obj_material);
   obj.position.set(pos_x, pos_y, pos_z);
   obj.rotation.set(rot_x, rot_y, rot_z);
@@ -134,7 +141,15 @@ We can also create [lights](https://threejs.org/docs/#api/lights/Light). They do
 
 
 
-### 04 - let's go VR!
+## Chapter 04 - Playing with the camera
+
+## Chapter 05 - Mouse tracking (raycasting)
+
+
+
+
+
+## Chapter 06 - WebVR!!!
 Now, let's go to the point of all this. Fortunately, there's not much code to add to make a VR scene. But first, let's go over the required libraries (which can be found on this repository, on the `lib/` folder):
 
 - [WebVR](https://webvr.info/): library that implements the WebVR API
@@ -149,23 +164,23 @@ In addition to these libraries, as we're developing in a computer, we'll need th
 Now, the code.
 
 1. We need to create the new renderer for the VR. This will handle the split screen as well as making the projection matrices to account for the perspective of each eye.
-  ```
+  ```JavaScript
   effect = new THREE.VREffect(renderer);
   effect.setSize(wid, hei);
   ```
 2. Enable the VR mode in threejs.
-  ```
+  ```JavaScript
   renderer.vr.enabled = true;
   ```
 3. Use VRControls to control the camera.
-  ```
+  ```JavaScript
   controls = new THREE.VRControls( camera );
   controls.standing = true;
   camera.position.y = controls.userHeight;
 	controls.update();
   ```
 4. Get and setup the VR display. This is one of the key parts of the process. `navigator` is a built-in browser variable, which we ask for a `VRDisplay`, a new built-in class in the Web API. When the [promise](https://developers.google.com/web/fundamentals/primers/promises) is fulfilled, we are returned an array of VRDisplays. Most of the time, we only have one VR display (mobile device or the Chrome extension), but in case you want to add an external device, you can log the displays and their parameters to modify the code accordingly and choose the desired one. Then, we create the "Enter VR mode" button, with the `getButton()` function from the WebVR library.
-  ```
+  ```JavaScript
   function setupVRStage(){
     // get available displays
     navigator.getVRDisplays().then( function(displays){
@@ -183,7 +198,7 @@ Now, the code.
   }
   ```
 5. Change the rendering pipeline. As stated before, the VR display is what has to ask for new frames to be rendered. VR applications are recommended to run at 90 fps, much faster than the 60 fps of the video game ideal. To be able to know on which mode should we render, we use the boolean parameter `vrDisplay.isPresenting`. If it's true, then we use the VREffect to render, and the VR display is the one that requests the next frame. Otherwise, we use the same code as before.
-  ```
+  ```JavaScript
   function animate(timestamp) {
     if(vrDisplay.isPresenting){ // VR rendering
       controls.update();
