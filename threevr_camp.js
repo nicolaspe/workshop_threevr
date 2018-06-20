@@ -47,10 +47,10 @@ function init(){
 
   // controls = new THREE.OrbitControls(camera, renderer.domElement);
   // controls.update();
-  controls = new THREE.VRControls(camera);
-  controls.standing = true;
-  camera.position.y = controls.userHeight;
-  controls.update();
+  // controls = new THREE.VRControls(camera);
+  // controls.standing = true;
+  // camera.position.y = controls.userHeight;
+  // controls.update();
 
   loader = new THREE.TextureLoader();
 
