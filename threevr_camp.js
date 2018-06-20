@@ -25,7 +25,7 @@ window.addEventListener('load', init);
 
 // SETUP
 function init(){
-  console.log("NO EFFECT, NEW THREE TEST v1.0.2");
+  console.log("NO EFFECT, NEW THREE TEST v1.1");
 
   container = document.querySelector('#sketch');
   let wid = window.innerWidth;
@@ -93,7 +93,7 @@ function animate() {
   renderer.setAnimationLoop( render );
 }
 function render(){
-  raycasting();
+  // raycasting();
 
   timekeep += 0.01;
 
