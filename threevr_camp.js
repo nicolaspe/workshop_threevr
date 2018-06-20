@@ -25,7 +25,7 @@ window.addEventListener('load', init);
 
 // SETUP
 function init(){
-  console.log("NO EFFECT, NEW THREE TEST v1.0");
+  console.log("NO EFFECT, NEW THREE TEST v1.0.1");
 
   container = document.querySelector('#sketch');
   let wid = window.innerWidth;
@@ -47,10 +47,10 @@ function init(){
 
   // controls = new THREE.OrbitControls(camera, renderer.domElement);
   // controls.update();
-  controls = new THREE.VRControls(camera);
-  controls.standing = true;
-  camera.position.y = controls.userHeight;
-  controls.update();
+  // controls = new THREE.VRControls(camera);
+  // controls.standing = true;
+  // camera.position.y = controls.userHeight;
+  // controls.update();
 
   loader = new THREE.TextureLoader();
 
@@ -98,7 +98,7 @@ function render(){
 
   moveSpheres();
 
-  controls.update();
+  // controls.update();
   renderer.render( scene, camera );
 }
 
