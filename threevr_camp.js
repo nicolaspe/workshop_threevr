@@ -25,7 +25,7 @@ window.addEventListener('load', init);
 
 // SETUP
 function init(){
-  console.log("NO EFFECT, NEW THREE TEST v1.1.1");
+  console.log("NO EFFECT, NEW THREE TEST v1.1.2");
 
   container = document.querySelector('#sketch');
   let wid = window.innerWidth;
