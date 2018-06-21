@@ -1,8 +1,7 @@
 /* THREE VR - 01
 *	Basic building block for three js
 *
-* three.js Workshop
-* Open Source Cinema - ITP
+* three.VR Workshop
 * nicolás escarpentier
 */
 
@@ -23,9 +22,10 @@ function init(){
 	container.appendChild(renderer.domElement);
 
 	scene = new THREE.Scene();
+	scene.background = new THREE.Color( 0x222222 );
 
 	camera = new THREE.PerspectiveCamera(60, wid/hei, 0.1, 5000);
-	camera.position.set(-10, 0, 0);
+	camera.position.set( -10, 0, 0 );
 
 	animate();
 }
@@ -33,7 +33,8 @@ function init(){
 
 // ANIMATION
 function animate() {
-	controls.update();
-	renderer.render(scene, camera);
-	requestAnimationFrame(animate);
+  renderer.setAnimationLoop( render );
+}
+function render(){
+  renderer.render( scene, camera );
 }

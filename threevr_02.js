@@ -1,8 +1,7 @@
 /* THREE VR - 02
 *	First elements!
 *
-* three.js Workshop
-* Open Source Cinema - ITP
+* three.VR Workshop
 * nicolás escarpentier
 */
 
@@ -23,21 +22,24 @@ function init(){
 	renderer.setPixelRatio(window.devicePixelRatio);
 	renderer.setSize(wid, hei);
 	container.appendChild(renderer.domElement);
+
 	scene = new THREE.Scene();
 	scene.background = new THREE.Color( 0x222222 );
+
 	camera = new THREE.PerspectiveCamera(60, wid/hei, 0.1, 5000);
-	camera.position.set(-10, 0, 0);
+	camera.position.set( -10, 0, 0 );
 
 	controls = new THREE.OrbitControls( camera, renderer.domElement );
 	controls.update();
 
 	loader = new THREE.TextureLoader();
-	createEnvironment();
 
 	window.addEventListener('resize', onWindowResize, true );
 
+	createEnvironment();
 	animate();
 }
+
 
 // EVENTS
 function onWindowResize(){
@@ -51,14 +53,15 @@ function onWindowResize(){
 }
 
 
-
 // ANIMATION
 function animate() {
-	controls.update();
-	renderer.render(scene, camera);
-	requestAnimationFrame(animate);
+  renderer.setAnimationLoop( render );
 }
+function render(){
+	controls.update();
 
+  renderer.render( scene, camera );
+}
 
 
 // ENVIRONMENT
@@ -86,7 +89,7 @@ function createEnvironment(){
 	});
 	let ref_plane = new THREE.Mesh(plane_geo, plane_mat);
 	ref_plane.rotation.x = Math.PI/2;
-	ref_plane.position.set(0, -200, 0);
+	ref_plane.position.set(0, -20, 0);
 	scene.add(ref_plane);
 
 

@@ -1,8 +1,7 @@
 /* THREE VR - 05
 *	Raycasting
 *
-* three.js Workshop
-*	Open Source Cinema - ITP
+* three.VR Workshop
 *	nicolás escarpentier
 */
 
@@ -26,33 +25,29 @@ function init(){
 	renderer.setPixelRatio(window.devicePixelRatio);
 	renderer.setSize(wid, hei);
 	container.appendChild(renderer.domElement);
+
 	scene = new THREE.Scene();
 	scene.background = new THREE.Color( 0x222222 );
+
 	camera = new THREE.PerspectiveCamera(60, wid/hei, 0.1, 5000);
-	camera.position.set(-10, 0, 0);
+	camera.position.set( -10, 0, 0 );
+
 	controls = new THREE.OrbitControls( camera, renderer.domElement );
 	controls.update();
+
 	loader = new THREE.TextureLoader();
 
-	// more INITIALIZATION
+	// more INITIALIZATION > RAYCASTING variables
 	mouse     = new THREE.Vector2();
 	raycaster = new THREE.Raycaster();
-
-	// OBJECT CREATION
-	scene_objects = [];
-	createEnvironment();
 
 	// event listeners
 	window.addEventListener('resize', onWindowResize, true );
 	window.addEventListener('mousemove', onMouseMove, false);
-	$("#sketch").on("dragenter dragstart dragend dragleave dragover drag drop", function(e){
-		e.preventDefault();
-		// get the mouse position in normalized coordinates
-		mouse.x =  (e.clientX / window.innerWidth) *2 -1;
-		mouse.y = -(e.clientY / window.innerHeight)*2 +1;
-		raycasting();
-	});
 
+	// OBJECT CREATION
+	scene_objects = [];
+	createEnvironment();
 	animate();
 }
 
@@ -76,14 +71,17 @@ function onMouseMove( event ) {
 
 // ANIMATION
 function animate() {
-	raycasting();
-
-	moveSpheres();
+  renderer.setAnimationLoop( render );
+}
+function render(){
 	timekeep += 0.01;
 
+	moveSpheres();
+
 	controls.update();
-	renderer.render(scene, camera);
-	requestAnimationFrame(animate);
+  raycasting();
+
+  renderer.render( scene, camera );
 }
 
 function moveSpheres(){
@@ -100,7 +98,7 @@ function raycasting(){
   for (let i = 0; i < scene_objects.length; i++) {
     scene_objects[i].scale.set(1.0, 1.0, 1.0);
   }
-  // "highlight" by scalig intersected elements
+  // "highlight" by scaling intersected elements
   for (let i = 0; i < intersects.length; i++) {
     intersects[i].object.scale.set(1.1, 1.1, 1.1);
   }

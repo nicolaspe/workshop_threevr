@@ -1,8 +1,7 @@
 /* THREE VR - 03
 *	Animation!
-*
-* three.js Workshop
-* Open Source Cinema - ITP
+
+* three.VR Workshop
 * nicolás escarpentier
 */
 
@@ -24,20 +23,24 @@ function init(){
 	renderer.setPixelRatio(window.devicePixelRatio);
 	renderer.setSize(wid, hei);
 	container.appendChild(renderer.domElement);
+
 	scene = new THREE.Scene();
 	scene.background = new THREE.Color( 0x222222 );
+
 	camera = new THREE.PerspectiveCamera(60, wid/hei, 0.1, 5000);
-	camera.position.set(-10, 0, 0);
+	camera.position.set( -10, 0, 0 );
+
 	controls = new THREE.OrbitControls( camera, renderer.domElement );
 	controls.update();
-	loader = new THREE.TextureLoader();
 
-	createEnvironment();
+	loader = new THREE.TextureLoader();
 
 	window.addEventListener('resize', onWindowResize, true );
 
+	createEnvironment();
 	animate();
 }
+
 
 // EVENTS
 function onWindowResize(){
@@ -51,22 +54,24 @@ function onWindowResize(){
 }
 
 
-
 // ANIMATION
 function animate() {
-	moveSpheres();
+  renderer.setAnimationLoop( render );
+}
+function render(){
 	timekeep += 0.01;
 
+	moveSpheres();
+
 	controls.update();
-	renderer.render(scene, camera);
-	requestAnimationFrame(animate);
+
+  renderer.render( scene, camera );
 }
 
 function moveSpheres(){
 	sphere1.position.z = Math.sin(timekeep)*150;
 	sphere2.position.x = Math.sin(timekeep)*150;
 }
-
 
 
 // ENVIRONMENT

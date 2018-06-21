@@ -2,13 +2,10 @@
 // Thu June 14 2018
 
 // global variables
-
 let scene;
 let renderer;
 let camera;
 let container;
-let effect;
-let vrDisplay;
 let vrButton;
 
 let controls; // to look around
@@ -25,8 +22,6 @@ window.addEventListener('load', init);
 
 // SETUP
 function init(){
-  console.log("NO EFFECT, NEW THREE TEST v1.1.2");
-
   container = document.querySelector('#sketch');
   let wid = window.innerWidth;
   let hei = window.innerHeight;
@@ -36,20 +31,12 @@ function init(){
   renderer.setSize(wid, hei);
   container.appendChild(renderer.domElement);
 
-  // effect = new THREE.VREffect(renderer);
-  // effect.setSize(wid, hei);
-  renderer.vr.enabled = true;
-
   scene = new THREE.Scene();
 
-  camera = new THREE.PerspectiveCamera(60, wid/hei, 0.1, 5000);
+  camera = new THREE.PerspectiveCamera(80, wid/hei, 0.1, 5000);
   camera.position.set( 0, 10, 0) ;
 
   // controls = new THREE.OrbitControls(camera, renderer.domElement);
-  // controls.update();
-  // controls = new THREE.VRControls(camera);
-  // controls.standing = true;
-  // camera.position.y = controls.userHeight;
   // controls.update();
 
   loader = new THREE.TextureLoader();
@@ -61,30 +48,15 @@ function init(){
   mouse = new THREE.Vector2();
   raycaster = new THREE.Raycaster();
 
+  // WebVR!!!
+  renderer.vr.enabled = true;
+  vrButton = WEBVR.createButton( renderer );
+  document.getElementById('vr_button').appendChild( vrButton );
+
   scene_objects = [];
   createEnvironment();
   setupVRStage();
-}
-
-function setupVRStage(){
-
-  vrButton = WEBVR.createButton( renderer );
-  document.getElementById('vr_button').appendChild( vrButton );
   animate();
-
-  // get available VR displays
-  // navigator.getVRDisplays().then( function(displays){
-  //   if(displays.length > 0){
-  //     // console.log(displays);
-  //     vrDisplay = displays[0];
-  //     // setup vrButton
-  //     vrButton = WEBVR.createButton( renderer );
-  //     document.getElementById('vr_button').appendChild( vrButton );
-  //   } else {
-  //     console.log("NO VR DISPLAYS AVAILABLE!");
-  //   }
-  //   animate();
-  // } );
 }
 
 
@@ -131,7 +103,6 @@ function onWindowResize(){
 
   renderer.setSize(wid, hei);
   renderer.setPixelRatio(window.devicePixelRatio);
-  // effect.setSize(wid, hei);
   camera.aspect = wid/hei;
   camera.updateProjectionMatrix();
 }
