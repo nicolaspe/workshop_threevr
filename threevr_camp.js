@@ -55,7 +55,6 @@ function init(){
 
   scene_objects = [];
   createEnvironment();
-  setupVRStage();
   animate();
 }
 
